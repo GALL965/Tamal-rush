@@ -1,0 +1,60 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://scenes/actors/Enemy.gd" type="Script" id=1]
+[ext_resource path="res://assets/Sprites/enemigos/coyol/coi.png" type="Texture" id=2]
+[ext_resource path="res://assets/Sprites/enemigos/coyol/cor1.png" type="Texture" id=3]
+[ext_resource path="res://assets/Sprites/enemigos/coyol/coa3.png" type="Texture" id=4]
+[ext_resource path="res://assets/Sprites/enemigos/coyol/cor3.png" type="Texture" id=5]
+[ext_resource path="res://assets/Sprites/enemigos/coyol/cor4.png" type="Texture" id=6]
+[ext_resource path="res://assets/Sprites/enemigos/coyol/coa4.png" type="Texture" id=7]
+[ext_resource path="res://assets/Sprites/enemigos/coyol/coa1.png" type="Texture" id=8]
+[ext_resource path="res://assets/Sprites/enemigos/coyol/cor2.png" type="Texture" id=9]
+[ext_resource path="res://assets/Sprites/enemigos/coyol/coa2.png" type="Texture" id=10]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 24.0
+
+[sub_resource type="SpriteFrames" id=3]
+animations = [ {
+"frames": [ ExtResource( 2 ) ],
+"loop": true,
+"name": "idle",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 3 ), ExtResource( 9 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 5 ), ExtResource( 9 ) ],
+"loop": true,
+"name": "run",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 8 ), ExtResource( 10 ), ExtResource( 4 ), ExtResource( 7 ), ExtResource( 4 ), ExtResource( 10 ) ],
+"loop": true,
+"name": "walk",
+"speed": 5.0
+} ]
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 167.192
+
+[node name="Enemy" type="KinematicBody2D"]
+script = ExtResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="AnimatedSprite" parent="CollisionShape2D"]
+position = Vector2( 2, -8 )
+scale = Vector2( 0.141773, 0.142184 )
+frames = SubResource( 3 )
+animation = "idle"
+playing = true
+
+[node name="Detect" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Detect"]
+position = Vector2( 1, -1 )
+shape = SubResource( 2 )
+
+[node name="Wander" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="Wander" to="." method="_on_Wander_timeout"]
