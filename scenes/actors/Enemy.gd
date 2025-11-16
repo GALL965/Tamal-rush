@@ -34,9 +34,6 @@ func _ready():
 	_set_random_dir()
 	if wander: wander.start(rand_range(0.8, 1.6))
 	
-	if vis:
-		vis.connect("screen_exited", self, "_on_screen_exited")
-		vis.connect("screen_entered", self, "_on_screen_entered")
 
 func _physics_process(delta):
 	if player == null:
@@ -60,9 +57,9 @@ func _physics_process(delta):
 		chasing = false
 		vel = target_dir * max(patrol_speed, chase_speed) * 1.15
 	else:
-		var df := Game.distance_factor(global_position)
-		var sp_patrol := patrol_speed * (1.0 + 0.05 * (df - 1.0))
-		var sp_chase  := chase_speed  * (1.0 + 0.10 * (df - 1.0))
+		var df = Game.distance_factor(global_position)
+		var sp_patrol = patrol_speed * (1.0 + 0.05 * (df - 1.0))
+		var sp_chase  = chase_speed  * (1.0 + 0.10 * (df - 1.0))
 
 		if player:
 			var dist_to_player := global_position.distance_to(player.global_position)

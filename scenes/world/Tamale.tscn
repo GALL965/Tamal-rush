@@ -18,3 +18,5 @@ texture = ExtResource( 2 )
 rotation = 1.57254
 scale = Vector2( 0.993588, 0.999996 )
 shape = SubResource( 1 )
+
+[connection signal="body_entered" from="." to="." method="_on_tamale_body_entered"]
