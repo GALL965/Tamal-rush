@@ -53,18 +53,16 @@ func _try_dash(input: Vector2) -> void:
 	var name_to_spend := _pop_any_carried_tamal()
 	if name_to_spend == "":
 		return
-
 	can_dash = false
 	dash_timer = dash_time
-
 	var dir: Vector2 = input
 	if dir == Vector2.ZERO:
 		if vel.length() > 0.0:
 			dir = vel.normalized()
 		else:
 			dir = Vector2.RIGHT
-
 	vel = dir * dash_speed
+	$dash.play()
 	dash_cd.start(dash_cooldown)
 
 

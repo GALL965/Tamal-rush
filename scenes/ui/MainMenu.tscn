@@ -1,8 +1,11 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://scenes/ui/MainMenu.gd" type="Script" id=1]
 [ext_resource path="res://assets/Sprites/UI/boton.png" type="Texture" id=2]
 [ext_resource path="res://assets/Sour_Gummy/static/SourGummy-Black.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://assets/sfx/button.wav" type="AudioStream" id=4]
+[ext_resource path="res://assets/sfx/tamal.wav" type="AudioStream" id=5]
+[ext_resource path="res://assets/Sprites/UI/fond.png" type="Texture" id=6]
 
 [sub_resource type="Theme" id=1]
 
@@ -57,15 +60,22 @@ region_rect = Rect2( 0, 0, 500, 250 )
 [node name="MainMenu" type="Control"]
 script = ExtResource( 1 )
 
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_right = 2880.0
+margin_bottom = 2160.0
+rect_scale = Vector2( 0.444855, 0.444855 )
+texture = ExtResource( 6 )
+
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchor_left = 0.181
 anchor_top = 0.104
 anchor_right = 0.504
 anchor_bottom = 0.168
-margin_left = 400.0
-margin_top = 200.0
-margin_right = 700.0
-margin_bottom = 475.0
+margin_left = 470.0
+margin_top = 238.0
+margin_right = 770.0
+margin_bottom = 606.0
+rect_scale = Vector2( 1.10799, 1.10799 )
 size_flags_horizontal = 3
 theme = SubResource( 1 )
 alignment = 1
@@ -109,6 +119,14 @@ custom_styles/normal = SubResource( 13 )
 text = "salir"
 
 [node name="Tween" type="Tween" parent="."]
+
+[node name="button" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 4 )
+
+[node name="huh" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 5 )
+volume_db = -21.348
+pitch_scale = 0.8
 
 [connection signal="pressed" from="VBoxContainer/Jugar" to="." method="_on_Jugar_pressed"]
 [connection signal="pressed" from="VBoxContainer/Opciones" to="." method="_on_Opciones_pressed"]

@@ -29,18 +29,22 @@ func _ready():
 # =====================
 
 func _on_Jugar_pressed():
+	$button.play()
+	$huh.play()
 	_start_exit_animation("_go_to_world")
 
 func _go_to_world():
 	get_tree().change_scene("res://scenes/World.tscn")
 
 func _on_Opciones_pressed():
+	$button.play()
 	_start_exit_animation("_go_to_options")
 
 func _go_to_options():
 	get_tree().change_scene("res://scenes/ui/Opciones.tscn")
 
 func _on_Salir_pressed():
+	$button.play()
 	_start_exit_animation("_quit_game")
 
 func _quit_game():

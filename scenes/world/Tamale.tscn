@@ -1,9 +1,13 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://scenes/world/Tamale.gd" type="Script" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://assets/sfx/tamal.wav" type="AudioStream" id=3]
 
 [sub_resource type="CapsuleShape2D" id=1]
+
+[sub_resource type="AudioStreamRandomPitch" id=2]
+audio_stream = ExtResource( 3 )
 
 [node name="tamale" type="Area2D"]
 script = ExtResource( 1 )
@@ -18,5 +22,9 @@ texture = ExtResource( 2 )
 rotation = 1.57254
 scale = Vector2( 0.993588, 0.999996 )
 shape = SubResource( 1 )
+
+[node name="item" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource( 2 )
+volume_db = -3.627
 
 [connection signal="body_entered" from="." to="." method="_on_tamale_body_entered"]

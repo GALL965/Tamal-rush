@@ -14,7 +14,7 @@ public class StatsService {
 
     public void saveRun(GamePayload payload) {
 
-        // EXTRAER player
+
         var p = payload.getPlayer();
 
         Player player = new Player();

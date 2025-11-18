@@ -1,19 +1,11 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://scenes/actors/Player.gd" type="Script" id=1]
-[ext_resource path="res://assets/Sprites/Machape/r2.png" type="Texture" id=2]
-[ext_resource path="res://assets/Sprites/Machape/r3.png" type="Texture" id=3]
-[ext_resource path="res://assets/Sprites/Machape/r5.png" type="Texture" id=4]
-[ext_resource path="res://assets/Sprites/Machape/r6.png" type="Texture" id=5]
-[ext_resource path="res://assets/Sprites/Machape/r4.png" type="Texture" id=6]
+[ext_resource path="res://assets/Sprites/Machape/dash.png" type="Texture" id=2]
+[ext_resource path="res://assets/Sprites/Machape/run.png" type="Texture" id=3]
+[ext_resource path="res://assets/sfx/dash.wav" type="AudioStream" id=4]
 [ext_resource path="res://assets/Sprites/Machape/idle.png" type="Texture" id=7]
-[ext_resource path="res://assets/Sprites/Machape/r1.png" type="Texture" id=8]
 [ext_resource path="res://scenes/actors/Camera2D.gd" type="Script" id=9]
-[ext_resource path="res://assets/Sprites/Machape/d1.png" type="Texture" id=10]
-[ext_resource path="res://assets/Sprites/Machape/d5.png" type="Texture" id=11]
-[ext_resource path="res://assets/Sprites/Machape/d4.png" type="Texture" id=12]
-[ext_resource path="res://assets/Sprites/Machape/d2.png" type="Texture" id=13]
-[ext_resource path="res://assets/Sprites/Machape/d3.png" type="Texture" id=14]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 39.0
@@ -21,9 +13,59 @@ radius = 39.0
 [sub_resource type="CapsuleShape2D" id=2]
 radius = 30.0
 
+[sub_resource type="AtlasTexture" id=4]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 1024, 1024 )
+
+[sub_resource type="AtlasTexture" id=5]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 1024, 0, 1024, 1024 )
+
+[sub_resource type="AtlasTexture" id=6]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 2048, 0, 1024, 1024 )
+
+[sub_resource type="AtlasTexture" id=7]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 3072, 0, 1024, 1024 )
+
+[sub_resource type="AtlasTexture" id=8]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 4096, 0, 1024, 1024 )
+
+[sub_resource type="AtlasTexture" id=9]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 0, 0, 1024, 1024 )
+
+[sub_resource type="AtlasTexture" id=10]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 1024, 0, 1024, 1024 )
+
+[sub_resource type="AtlasTexture" id=11]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 2048, 0, 1024, 1024 )
+
+[sub_resource type="AtlasTexture" id=12]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 3072, 0, 1024, 1024 )
+
+[sub_resource type="AtlasTexture" id=13]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 4096, 0, 1024, 1024 )
+
 [sub_resource type="SpriteFrames" id=3]
 animations = [ {
-"frames": [ ExtResource( 10 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 12 ), ExtResource( 11 ), ExtResource( 14 ), ExtResource( 13 ), ExtResource( 10 ) ],
+"frames": [ SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 4 ) ],
 "loop": false,
 "name": "dash",
 "speed": 12.0
@@ -33,11 +75,15 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 8 ), ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 4 ), ExtResource( 6 ), ExtResource( 2 ) ],
+"frames": [ SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 12 ), SubResource( 11 ), SubResource( 10 ) ],
 "loop": true,
 "name": "run",
-"speed": 10.0
+"speed": 9.99
 } ]
+
+[sub_resource type="AudioStreamRandomPitch" id=14]
+audio_stream = ExtResource( 4 )
+random_pitch = 1.4
 
 [node name="Player" type="KinematicBody2D"]
 script = ExtResource( 1 )
@@ -65,5 +111,8 @@ scale = Vector2( 0.105957, 0.105957 )
 frames = SubResource( 3 )
 animation = "idle"
 playing = true
+
+[node name="dash" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource( 14 )
 
 [connection signal="timeout" from="DashCD" to="." method="_on_DashCD_timeout"]

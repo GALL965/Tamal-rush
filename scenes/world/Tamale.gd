@@ -15,8 +15,12 @@ func _ready() -> void:
 
 
 func _on_tamale_body_entered(body):
+
+
 	if body.name == "Player":
+		$item.play()
 		# 1) SISTEMA VIEJO: suma al inventario en mano
+		
 		Game.add_carried(tamal_name, 1)
 
 		# 2) SISTEMA NUEVO: registra en las stats de la run
