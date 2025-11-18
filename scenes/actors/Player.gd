@@ -1,5 +1,6 @@
 extends KinematicBody2D
 
+
 export var move_speed := 200.0
 export var dash_speed := 600.0
 export var dash_time := 0.50
