@@ -404,16 +404,14 @@ func bank_all() -> void:
 func lose_carried() -> void:
 	carried.clear()
 	
-	
-	
 func send_stats_to_api() -> void:
 	var http := HTTPRequest.new()
-	add_child(http)  # el autoload Game es un Node, así que puede tener hijos
+	add_child(http)
 
-	var url := "http://localhost:8080/api/upload"  # tu API de Spring Boot
+	var url := "http://localhost:8080/api/run"
 	var headers = ["Content-Type: application/json"]
 
-	var body := to_json(build_payload())  # ya tienes build_payload() en Game.gd
+	var body := to_json(build_payload())
 
 	http.request(url, headers, false, HTTPClient.METHOD_POST, body)
 
