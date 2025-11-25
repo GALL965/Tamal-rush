@@ -84,8 +84,9 @@ func chunk_to_world_origin(c: Vector2) -> Vector2:
 # =========================
 func _ready():
 	
+	
 	print("Ground cell_size=", ground.cell_size, " scale=", ground.scale)
-
+	_init_pause() 
 	# Distancia de limpieza
 	DESPAWN_DISTANCE_PIXELS = (UNLOAD_RADIUS_CHUNKS + 2) * CHUNK_SIZE * TILE_SIZE
 
@@ -203,7 +204,8 @@ func respawn_player_at_camp():
 
 func _input(event):
 	if event.is_action_pressed("pause"):
-		get_tree().paused = not get_tree().paused
+		_toggle_pause()
+
 
 # =========================
 # COLA DIFERIDA (tiles/spawns)
@@ -249,4 +251,28 @@ func _despawn_far_entities():
 
 		if child.global_position.distance_to(px) > DESPAWN_DISTANCE_PIXELS:
 			child.queue_free()
+			
+#Pause we
+#----------------------------------------------------
+# File: res://scenes/World.gd
 
+onready var pause_menu := $PauseMenu
+
+func _init_pause():
+	pause_mode = Node.PAUSE_MODE_PROCESS
+	if pause_menu:
+		pause_menu.visible = false
+		pause_menu.pause_mode = Node.PAUSE_MODE_PROCESS
+
+# Llama esta función desde tu _ready principal
+func _toggle_pause():
+	if not pause_menu:
+		print("[Pause] No existe PauseMenu dentro de World.")
+		return
+
+	if get_tree().paused:
+		get_tree().paused = false
+		pause_menu.ocultar()
+	else:
+		get_tree().paused = true
+		pause_menu.mostrar()

@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scenes/world/Camp.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/actors/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/World.gd" type="Script" id=3]
 [ext_resource path="res://scenes/ui/HUD.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/Sprites/terr/ts.png" type="Texture" id=5]
+[ext_resource path="res://scenes/ui/PauseMenu.tscn" type="PackedScene" id=6]
 
 [sub_resource type="TileSet" id=5]
 0/name = "ts.png 0"
@@ -968,3 +969,5 @@ format = 1
 scale = Vector2( 0.3, 0.3 )
 tile_set = SubResource( 4 )
 format = 1
+
+[node name="PauseMenu" parent="." instance=ExtResource( 6 )]

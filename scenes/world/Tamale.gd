@@ -31,3 +31,5 @@ func _on_tamale_body_entered(body):
 			global_position
 		)
 		queue_free()
+		
+		#HOLA
