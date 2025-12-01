@@ -18,11 +18,4 @@ func _on_Button_pressed() -> void:
 	ocultar()
 
 func _on_Button2_pressed() -> void:
-	get_tree().paused = false
-	
-	var path := "res://scenes/ui/MainMenu.tscn"
-
-	if ResourceLoader.exists(path):
-		get_tree().change_scene(path) 
-	else:
-		get_tree().quit()
+	LoadingScreen.goto_scene("res://scenes/ui/MainMenu.tscn")

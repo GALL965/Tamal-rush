@@ -34,7 +34,8 @@ func _on_Jugar_pressed():
 	_start_exit_animation("_go_to_world")
 
 func _go_to_world():
-	get_tree().change_scene("res://scenes/World.tscn")
+	#get_tree().change_scene("res://scenes/World.tscn")
+	LoadingScreen.goto_scene("res://scenes/World.tscn")
 
 func _on_Opciones_pressed():
 	$button.play()

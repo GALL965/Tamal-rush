@@ -5,6 +5,7 @@ export var chase_speed  := 90.0
 export var detect_range := 160.0
 onready var vis := $Vis
 
+var _enemy_id := 0   # ID único para BD
 
 export (NodePath) var animated_sprite_path = NodePath("AnimatedSprite")
 
@@ -15,25 +16,41 @@ var target_dir := Vector2.ZERO
 var player: Node = null
 var chasing := false
 var facing := 1
+var _last_chasing_state := false  # Para detectar cambios y loguear
 
 onready var anim: AnimatedSprite = null
 onready var wander := $Wander
+
 
 func _ready():
 	add_to_group("enemies")
 	set_physics_process(true)
 
-
 	_set_anim_ref()
-
 
 	var ps = get_tree().get_nodes_in_group("player")
 	if ps.size() > 0:
 		player = ps[0]
 
 	_set_random_dir()
-	if wander: wander.start(rand_range(0.8, 1.6))
-	
+	if wander:
+		wander.start(rand_range(0.8, 1.6))
+
+	# ----------------------------------------------------
+	# REGISTRO DEL ENEMIGO EN GAME PARA BD
+	# ----------------------------------------------------
+	_enemy_id = Game.enemies.size() + 1
+	Game.register_enemy_spawn(
+		_enemy_id,
+		"Coyote",          # Ajusta el tipo si usas otro animal
+		patrol_speed,
+		chase_speed,
+		detect_range,
+		Game.camp_id
+	)
+	_last_chasing_state = false   # Inicial para logs
+	# ----------------------------------------------------
+
 
 func _physics_process(delta):
 	if player == null:
@@ -47,7 +64,9 @@ func _physics_process(delta):
 
 	var player_in_camp := false
 	if player:
-		player_in_camp = player.global_position.distance_to(Game.run_start_camp_pos) < Game.camp_safe_radius
+		player_in_camp = player.global_position.distance_to(
+			Game.run_start_camp_pos
+		) < Game.camp_safe_radius
 
 	if inside_camp:
 		var dir := away
@@ -63,7 +82,11 @@ func _physics_process(delta):
 
 		if player:
 			var dist_to_player := global_position.distance_to(player.global_position)
-			chasing = (not player_in_camp) and (dist_to_player <= detect_range) and (not player.is_hidden())
+
+			chasing = (not player_in_camp) \
+				and (dist_to_player <= detect_range) \
+				and (not player.is_hidden())
+
 			if chasing:
 				target_dir = (player.global_position - global_position).normalized()
 				vel = target_dir * sp_chase
@@ -79,17 +102,31 @@ func _physics_process(delta):
 	vel = move_and_slide(vel)
 	_update_anim()
 
+	# ----------------------------------------------------
+	# LOGS PARA BD: detectar cambios en persecución
+	# ----------------------------------------------------
+	if chasing != _last_chasing_state:
+		Game.set_enemy_chasing(_enemy_id, chasing)
+		if chasing:
+			Game.log_enemy_event(_enemy_id, "detect")
+		else:
+			Game.log_enemy_event(_enemy_id, "lost")
+	_last_chasing_state = chasing
+	# ----------------------------------------------------
+
+
 func _on_Wander_timeout():
 	if not chasing and global_position.distance_to(Game.run_start_camp_pos) > (Game.camp_safe_radius + SAFE_MARGIN):
 		_set_random_dir()
-	if wander: wander.start(rand_range(0.8, 1.8))
+	if wander:
+		wander.start(rand_range(0.8, 1.8))
+
 
 func _set_random_dir():
 	target_dir = Vector2(randf()*2.0 - 1.0, randf()*2.0 - 1.0).normalized()
 
 
 func _set_anim_ref():
-
 	if animated_sprite_path != NodePath(""):
 		anim = get_node_or_null(animated_sprite_path)
 
@@ -99,8 +136,8 @@ func _set_anim_ref():
 	if anim == null:
 		push_warning("Enemy: AnimatedSprite no encontrado. Asigna 'animated_sprite_path' o renombra el nodo.")
 	else:
-
 		anim.play("idle")
+
 
 func _find_animated_sprite(n: Node) -> AnimatedSprite:
 	for c in n.get_children():
@@ -111,26 +148,26 @@ func _find_animated_sprite(n: Node) -> AnimatedSprite:
 			return r
 	return null
 
+
 func _update_anim():
 	if anim == null:
 		return 
-		
 
 	if abs(vel.x) > 0.1:
 		if vel.x >= 0.0:
 			facing = 1
 		else:
 			facing = -1
-	anim.flip_h = (facing < 0)
 
+	anim.flip_h = (facing < 0)
 
 	var speed := vel.length()
 	var want := "idle"
+
 	if chasing and speed > 5.0:
 		want = "run"
 	elif speed > 5.0:
 		want = "walk"
-
 
 	if want == "walk":
 		anim.speed_scale = clamp(speed / max(patrol_speed, 0.001), 0.6, 1.3)

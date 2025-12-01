@@ -1,6 +1,15 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scenes/ui/HUD.gd" type="Script" id=1]
+[ext_resource path="res://assets/Sour_Gummy/static/SourGummy-Medium.ttf" type="DynamicFontData" id=2]
+
+[sub_resource type="DynamicFont" id=1]
+size = 20
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 20
+font_data = ExtResource( 2 )
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource( 1 )
@@ -11,15 +20,21 @@ margin_bottom = 42.0
 rect_scale = Vector2( 1, 0.992071 )
 
 [node name="Carried" type="Label" parent="HBoxContainer"]
-margin_top = 14.0
-margin_bottom = 28.0
+margin_top = 8.0
+margin_right = 34.0
+margin_bottom = 34.0
+custom_fonts/font = SubResource( 1 )
+text = "asd"
 
 [node name="Banked" type="Label" parent="HBoxContainer"]
-margin_left = 4.0
-margin_top = 14.0
-margin_right = 4.0
-margin_bottom = 28.0
+margin_left = 38.0
+margin_top = 8.0
+margin_right = 72.0
+margin_bottom = 34.0
+custom_fonts/font = SubResource( 1 )
+text = "asd"
 
 [node name="Distance" type="Label" parent="."]
 margin_right = 40.0
 margin_bottom = 14.0
+custom_fonts/font = SubResource( 2 )
