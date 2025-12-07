@@ -71,10 +71,10 @@ anchor_left = 0.181
 anchor_top = 0.104
 anchor_right = 0.504
 anchor_bottom = 0.168
-margin_left = 470.0
-margin_top = 238.0
-margin_right = 770.0
-margin_bottom = 606.0
+margin_left = 137.0
+margin_top = 66.0
+margin_right = 437.0
+margin_bottom = 558.0
 rect_scale = Vector2( 1.10799, 1.10799 )
 size_flags_horizontal = 3
 theme = SubResource( 1 )
@@ -93,10 +93,24 @@ custom_styles/pressed = SubResource( 8 )
 custom_styles/normal = SubResource( 6 )
 text = "Jugar"
 
-[node name="Opciones" type="Button" parent="VBoxContainer"]
+[node name="Stats" type="Button" parent="VBoxContainer"]
 margin_top = 124.0
 margin_right = 300.0
 margin_bottom = 244.0
+rect_min_size = Vector2( 180, 120 )
+rect_pivot_offset = Vector2( 120, 30 )
+size_flags_horizontal = 3
+size_flags_vertical = 0
+custom_fonts/font = SubResource( 14 )
+custom_styles/hover = SubResource( 7 )
+custom_styles/pressed = SubResource( 8 )
+custom_styles/normal = SubResource( 6 )
+text = "Stats"
+
+[node name="Opciones" type="Button" parent="VBoxContainer"]
+margin_top = 248.0
+margin_right = 300.0
+margin_bottom = 368.0
 rect_min_size = Vector2( 180, 120 )
 rect_pivot_offset = Vector2( 120, 30 )
 size_flags_vertical = 0
@@ -107,9 +121,9 @@ custom_styles/normal = SubResource( 5 )
 text = "Opciones"
 
 [node name="Salir" type="Button" parent="VBoxContainer"]
-margin_top = 248.0
+margin_top = 372.0
 margin_right = 300.0
-margin_bottom = 368.0
+margin_bottom = 492.0
 rect_min_size = Vector2( 180, 120 )
 rect_pivot_offset = Vector2( 120, 30 )
 custom_fonts/font = SubResource( 16 )
@@ -129,5 +143,6 @@ volume_db = -21.348
 pitch_scale = 0.8
 
 [connection signal="pressed" from="VBoxContainer/Jugar" to="." method="_on_Jugar_pressed"]
+[connection signal="pressed" from="VBoxContainer/Stats" to="." method="_on_Stats_pressed"]
 [connection signal="pressed" from="VBoxContainer/Opciones" to="." method="_on_Opciones_pressed"]
 [connection signal="pressed" from="VBoxContainer/Salir" to="." method="_on_Salir_pressed"]

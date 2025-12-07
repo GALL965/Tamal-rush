@@ -1,10 +1,9 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://scenes/actors/Player.gd" type="Script" id=1]
 [ext_resource path="res://assets/Sprites/Machape/dash.png" type="Texture" id=2]
 [ext_resource path="res://assets/Sprites/Machape/run.png" type="Texture" id=3]
 [ext_resource path="res://assets/sfx/dash.wav" type="AudioStream" id=4]
-[ext_resource path="res://assets/Sprites/Machape/idle.png" type="Texture" id=7]
 [ext_resource path="res://scenes/actors/Camera2D.gd" type="Script" id=9]
 
 [sub_resource type="CapsuleShape2D" id=1]
@@ -70,7 +69,7 @@ animations = [ {
 "name": "dash",
 "speed": 12.0
 }, {
-"frames": [ ExtResource( 7 ) ],
+"frames": [  ],
 "loop": true,
 "name": "idle",
 "speed": 5.0
@@ -111,6 +110,12 @@ scale = Vector2( 0.105957, 0.105957 )
 frames = SubResource( 3 )
 animation = "idle"
 playing = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatedSprite"]
+
+[node name="Sprite" type="Sprite" parent="AnimatedSprite/AnimationPlayer"]
+position = Vector2( -2, -2 )
+scale = Vector2( 0.105957, 0.105957 )
 
 [node name="dash" type="AudioStreamPlayer2D" parent="."]
 stream = SubResource( 14 )

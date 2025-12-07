@@ -1,0 +1,231 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://assets/Sour_Gummy/SourGummy-Italic-VariableFont_wdth,wght.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://assets/Sprites/UI/boton.png" type="Texture" id=2]
+[ext_resource path="res://assets/Sprites/UI/fond.png" type="Texture" id=3]
+[ext_resource path="res://assets/Sprites/Machape/idle.png" type="Texture" id=4]
+[ext_resource path="res://assets/Sprites/UI/close.png" type="Texture" id=5]
+[ext_resource path="res://assets/Sprites/UI/tabla.png" type="Texture" id=6]
+
+[sub_resource type="StyleBoxTexture" id=6]
+texture = ExtResource( 3 )
+region_rect = Rect2( 0, 0, 2880, 2160 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 24
+font_data = ExtResource( 1 )
+
+[sub_resource type="StyleBoxTexture" id=8]
+texture = ExtResource( 6 )
+region_rect = Rect2( 0, 0, 768, 768 )
+
+[sub_resource type="StyleBoxTexture" id=7]
+texture = ExtResource( 2 )
+region_rect = Rect2( 0, 0, 500, 250 )
+
+[sub_resource type="StyleBoxTexture" id=9]
+texture = ExtResource( 5 )
+region_rect = Rect2( 0, 0, 862, 304 )
+
+[sub_resource type="StyleBoxTexture" id=10]
+texture = ExtResource( 4 )
+region_rect = Rect2( 0, 0, 1024, 1024 )
+
+[node name="StatsMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 2.0
+margin_top = 16.0
+margin_right = -732.0
+margin_bottom = -263.0
+
+[node name="PanelBackground" type="Panel" parent="."]
+margin_left = -3.0
+margin_top = -2.0
+margin_right = 536.0
+margin_bottom = 427.0
+rect_min_size = Vector2( 350, 400 )
+custom_styles/panel = SubResource( 6 )
+
+[node name="Header" type="Label" parent="PanelBackground"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -145.0
+margin_top = 37.0
+margin_right = 150.0
+margin_bottom = 69.0
+custom_colors/font_color = Color( 0.0941176, 0.0901961, 0.0901961, 1 )
+custom_fonts/font = SubResource( 2 )
+text = "Estadísticas del Mapache"
+
+[node name="Header2" type="Label" parent="PanelBackground"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -140.5
+margin_top = 37.0
+margin_right = 154.5
+margin_bottom = 69.0
+custom_fonts/font = SubResource( 2 )
+text = "Estadísticas del Mapache"
+
+[node name="Panel" type="Panel" parent="PanelBackground"]
+margin_left = 6.0
+margin_top = 103.0
+margin_right = 356.0
+margin_bottom = 379.0
+custom_styles/panel = SubResource( 8 )
+
+[node name="StatsContainer" type="VBoxContainer" parent="PanelBackground"]
+margin_left = 14.0
+margin_top = 111.0
+margin_right = 343.0
+margin_bottom = 370.0
+custom_constants/separation = 8
+
+[node name="PanelContainer" type="PanelContainer" parent="PanelBackground/StatsContainer"]
+margin_right = 1420.0
+margin_bottom = 91.0
+custom_styles/panel = SubResource( 7 )
+
+[node name="Name" type="HBoxContainer" parent="PanelBackground/StatsContainer/PanelContainer"]
+margin_right = 1420.0
+margin_bottom = 91.0
+custom_constants/separation = 8
+
+[node name="Label" type="Label" parent="PanelBackground/StatsContainer/PanelContainer/Name"]
+margin_right = 292.0
+margin_bottom = 91.0
+text = "Nombre: "
+
+[node name="ValueLabel" type="Label" parent="PanelBackground/StatsContainer/PanelContainer/Name"]
+margin_left = 300.0
+margin_right = 612.0
+margin_bottom = 91.0
+text = "Mapachin"
+
+[node name="Speed" type="HBoxContainer" parent="PanelBackground/StatsContainer"]
+margin_top = 99.0
+margin_right = 1420.0
+margin_bottom = 190.0
+
+[node name="Label" type="Label" parent="PanelBackground/StatsContainer/Speed"]
+margin_right = 348.0
+margin_bottom = 91.0
+text = "Velocidad: "
+
+[node name="ValueLabel" type="Label" parent="PanelBackground/StatsContainer/Speed"]
+margin_left = 352.0
+margin_right = 777.0
+margin_bottom = 91.0
+text = "player.speed"
+
+[node name="DashPower" type="HBoxContainer" parent="PanelBackground/StatsContainer"]
+margin_top = 198.0
+margin_right = 1420.0
+margin_bottom = 289.0
+
+[node name="Label" type="Label" parent="PanelBackground/StatsContainer/DashPower"]
+margin_right = 195.0
+margin_bottom = 91.0
+text = "Dash: "
+
+[node name="ValueLabel" type="Label" parent="PanelBackground/StatsContainer/DashPower"]
+margin_left = 199.0
+margin_right = 840.0
+margin_bottom = 91.0
+text = "player.dash_power"
+
+[node name="Hidden" type="HBoxContainer" parent="PanelBackground/StatsContainer"]
+margin_top = 297.0
+margin_right = 1420.0
+margin_bottom = 388.0
+
+[node name="Label" type="Label" parent="PanelBackground/StatsContainer/Hidden"]
+margin_right = 250.0
+margin_bottom = 91.0
+text = "Oculto: "
+
+[node name="ValueLabel" type="Label" parent="PanelBackground/StatsContainer/Hidden"]
+margin_left = 254.0
+margin_right = 996.0
+margin_bottom = 91.0
+text = "player.hidden ? \"si : no\""
+
+[node name="TamalesCollected" type="HBoxContainer" parent="PanelBackground/StatsContainer"]
+margin_top = 396.0
+margin_right = 1420.0
+margin_bottom = 487.0
+
+[node name="Label" type="Label" parent="PanelBackground/StatsContainer/TamalesCollected"]
+margin_right = 664.0
+margin_bottom = 91.0
+text = "Tamales Recogidos: "
+
+[node name="ValueLabel" type="Label" parent="PanelBackground/StatsContainer/TamalesCollected"]
+margin_left = 668.0
+margin_right = 1420.0
+margin_bottom = 91.0
+text = "player.tamales_collect"
+
+[node name="TamalesBanked" type="HBoxContainer" parent="PanelBackground/StatsContainer"]
+margin_top = 495.0
+margin_right = 1420.0
+margin_bottom = 586.0
+
+[node name="Label" type="Label" parent="PanelBackground/StatsContainer/TamalesBanked"]
+margin_right = 694.0
+margin_bottom = 91.0
+text = "Tamales guardados: "
+
+[node name="ValueLabel" type="Label" parent="PanelBackground/StatsContainer/TamalesBanked"]
+margin_left = 698.0
+margin_right = 1245.0
+margin_bottom = 91.0
+text = "tamales_banked"
+
+[node name="EnemiesEncountered" type="HBoxContainer" parent="PanelBackground/StatsContainer"]
+margin_top = 594.0
+margin_right = 1420.0
+margin_bottom = 685.0
+
+[node name="Label" type="Label" parent="PanelBackground/StatsContainer/EnemiesEncountered"]
+margin_right = 791.0
+margin_bottom = 91.0
+text = "Enemigos encontrados: "
+
+[node name="ValueLabel" type="Label" parent="PanelBackground/StatsContainer/EnemiesEncountered"]
+margin_left = 795.0
+margin_right = 1061.0
+margin_bottom = 91.0
+text = "enemies"
+
+[node name="TotalTimePlayed" type="HBoxContainer" parent="PanelBackground/StatsContainer"]
+margin_top = 693.0
+margin_right = 1420.0
+margin_bottom = 784.0
+
+[node name="Label" type="Label" parent="PanelBackground/StatsContainer/TotalTimePlayed"]
+margin_right = 517.0
+margin_bottom = 91.0
+text = "Tiempo jugado: "
+
+[node name="ValueLabel" type="Label" parent="PanelBackground/StatsContainer/TotalTimePlayed"]
+margin_left = 521.0
+margin_right = 1107.0
+margin_bottom = 91.0
+text = "total.time_played"
+
+[node name="CloseButton" type="Button" parent="PanelBackground"]
+margin_left = 134.0
+margin_top = 345.0
+margin_right = 414.0
+margin_bottom = 441.0
+rect_min_size = Vector2( 40, 30 )
+custom_styles/normal = SubResource( 9 )
+
+[node name="mapache" type="Panel" parent="PanelBackground"]
+margin_left = 331.0
+margin_top = 138.0
+margin_right = 551.0
+margin_bottom = 367.0
+custom_styles/panel = SubResource( 10 )

@@ -1,0 +1,118 @@
+[gd_scene load_steps=21 format=2]
+
+[ext_resource path="res://scenes/actors/Player.gd" type="Script" id=1]
+[ext_resource path="res://assets/Sprites/Machape/dash.png" type="Texture" id=2]
+[ext_resource path="res://assets/Sprites/Machape/run.png" type="Texture" id=3]
+[ext_resource path="res://assets/sfx/dash.wav" type="AudioStream" id=4]
+[ext_resource path="res://assets/Sprites/Machape/idle.png" type="Texture" id=7]
+[ext_resource path="res://scenes/actors/Camera2D.gd" type="Script" id=9]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 39.0
+
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 30.0
+
+[sub_resource type="AtlasTexture" id=4]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 1024, 1024 )
+
+[sub_resource type="AtlasTexture" id=5]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 1024, 0, 1024, 1024 )
+
+[sub_resource type="AtlasTexture" id=6]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 2048, 0, 1024, 1024 )
+
+[sub_resource type="AtlasTexture" id=7]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 3072, 0, 1024, 1024 )
+
+[sub_resource type="AtlasTexture" id=8]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 4096, 0, 1024, 1024 )
+
+[sub_resource type="AtlasTexture" id=9]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 0, 0, 1024, 1024 )
+
+[sub_resource type="AtlasTexture" id=10]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 1024, 0, 1024, 1024 )
+
+[sub_resource type="AtlasTexture" id=11]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 2048, 0, 1024, 1024 )
+
+[sub_resource type="AtlasTexture" id=12]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 3072, 0, 1024, 1024 )
+
+[sub_resource type="AtlasTexture" id=13]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 4096, 0, 1024, 1024 )
+
+[sub_resource type="SpriteFrames" id=3]
+animations = [ {
+"frames": [ SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 4 ) ],
+"loop": false,
+"name": "dash",
+"speed": 12.0
+}, {
+"frames": [ ExtResource( 7 ) ],
+"loop": true,
+"name": "idle",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 12 ), SubResource( 11 ), SubResource( 10 ) ],
+"loop": true,
+"name": "run",
+"speed": 9.99
+} ]
+
+[sub_resource type="AudioStreamRandomPitch" id=14]
+audio_stream = ExtResource( 4 )
+random_pitch = 1.4
+
+[node name="Player" type="KinematicBody2D"]
+script = ExtResource( 1 )
+
+[node name="InteractArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractArea"]
+shape = SubResource( 1 )
+
+[node name="DashCD" type="Timer" parent="."]
+one_shot = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 2 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+smoothing_enabled = true
+smoothing_speed = 12.0
+script = ExtResource( 9 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( -2, -2 )
+scale = Vector2( 0.105957, 0.105957 )
+frames = SubResource( 3 )
+animation = "idle"
+playing = true
+
+[node name="dash" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource( 14 )
+
+[connection signal="timeout" from="DashCD" to="." method="_on_DashCD_timeout"]

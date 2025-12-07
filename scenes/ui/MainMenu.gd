@@ -5,6 +5,7 @@ onready var _vbox := $VBoxContainer
 onready var _btn_jugar := $VBoxContainer/Jugar
 onready var _btn_opciones := $VBoxContainer/Opciones
 onready var _btn_salir := $VBoxContainer/Salir
+onready var _btn_stats := $VBoxContainer/Stats
 
 const COLOR_NORMAL := Color(1, 1, 1, 1)
 const COLOR_HOVER  := Color(0.85, 0.85, 0.85, 1)
@@ -13,7 +14,7 @@ func _ready():
 	Game.load_progress()
 
 	# Estado inicial de los botones
-	for b in [_btn_jugar, _btn_opciones, _btn_salir]:
+	for b in [_btn_jugar, _btn_opciones, _btn_salir, _btn_stats]:
 		b.rect_scale = Vector2.ONE
 		b.modulate = COLOR_NORMAL
 		# Hover
@@ -181,3 +182,7 @@ func _on_button_pressed_anim(button):
 	_tween.start()
 
 
+
+
+func _on_Stats_pressed():
+	LoadingScreen.goto_scene("res://scenes/ui/StatsMenu.tscn")
