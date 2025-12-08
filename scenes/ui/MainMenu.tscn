@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://scenes/ui/MainMenu.gd" type="Script" id=1]
 [ext_resource path="res://assets/Sprites/UI/boton.png" type="Texture" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://assets/sfx/button.wav" type="AudioStream" id=4]
 [ext_resource path="res://assets/sfx/tamal.wav" type="AudioStream" id=5]
 [ext_resource path="res://assets/Sprites/UI/fond.png" type="Texture" id=6]
+[ext_resource path="res://assets/Sprites/UI/Imagen pegada.png" type="Texture" id=7]
 
 [sub_resource type="Theme" id=1]
 
@@ -141,6 +142,11 @@ stream = ExtResource( 4 )
 stream = ExtResource( 5 )
 volume_db = -21.348
 pitch_scale = 0.8
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 884, 334 )
+scale = Vector2( 0.493337, 0.493337 )
+texture = ExtResource( 7 )
 
 [connection signal="pressed" from="VBoxContainer/Jugar" to="." method="_on_Jugar_pressed"]
 [connection signal="pressed" from="VBoxContainer/Stats" to="." method="_on_Stats_pressed"]

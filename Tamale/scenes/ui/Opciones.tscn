@@ -18,4 +18,4 @@ margin_bottom = 16.0
 [node name="Volver" type="Button" parent="VBoxContainer"]
 margin_top = 20.0
 margin_right = 476.0
-margin_bottom = 40.0
+margin_bottom = 117.0

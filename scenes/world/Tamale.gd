@@ -5,7 +5,7 @@ export(int) var tamal_id := 0
 export(int) var value := 1
 
 func _ready() -> void:
-	# Registrar aparición del tamal para las stats
+	# Registrar aparicin del tamal para las stats
 	Game.register_tamal_spawn(
 		tamal_id,
 		tamal_name,

@@ -13,21 +13,19 @@ const COLOR_HOVER  := Color(0.85, 0.85, 0.85, 1)
 func _ready():
 	Game.load_progress()
 
-	# Estado inicial de los botones
+
 	for b in [_btn_jugar, _btn_opciones, _btn_salir, _btn_stats]:
 		b.rect_scale = Vector2.ONE
 		b.modulate = COLOR_NORMAL
 		# Hover
 		b.connect("mouse_entered", self, "_on_button_mouse_entered", [b])
 		b.connect("mouse_exited", self, "_on_button_mouse_exited", [b])
-		# Animación extra al presionar (además de las ya conectadas en el .tscn)
+
 		b.connect("pressed", self, "_on_button_pressed_anim", [b])
 
 	_play_intro_animation()
 
-# =====================
-# LÓGICA DE NAVEGACIÓN
-# =====================
+#navegacion
 
 func _on_Jugar_pressed():
 	$button.play()
@@ -35,7 +33,6 @@ func _on_Jugar_pressed():
 	_start_exit_animation("_go_to_world")
 
 func _go_to_world():
-	#get_tree().change_scene("res://scenes/World.tscn")
 	LoadingScreen.goto_scene("res://scenes/World.tscn")
 
 func _on_Opciones_pressed():
@@ -52,13 +49,12 @@ func _on_Salir_pressed():
 func _quit_game():
 	get_tree().quit()
 
-# =====================
-# ANIMACIONES MENÚ
-# =====================
+#animaciones
+
 
 # Entrada de todos los botones
 func _play_intro_animation():
-	# VBox empieza un poco abajo y transparente
+
 	_vbox.modulate.a = 0.0
 	_vbox.rect_position += Vector2(0, 40)
 
@@ -80,7 +76,7 @@ func _play_intro_animation():
 	)
 	_tween.start()
 
-# Salida de todos los botones (cuando se pulsa cualquiera)
+
 func _start_exit_animation(next_method_name):
 	_tween.stop_all()
 
@@ -114,14 +110,11 @@ func _start_exit_animation(next_method_name):
 	_tween.start()
 
 func _on_exit_animation_finished(next_method_name):
-	# Llamamos al método que cambia de escena / sale del juego
+
 	call_deferred(next_method_name)
 
-# =====================
-# ANIMACIONES DE HOVER Y CLICK
-# =====================
+#animaciones
 
-# Hover: oscurecer un poco y micro-zoom
 func _on_button_mouse_entered(button):
 	_tween.interpolate_property(
 		button, "modulate",
@@ -160,7 +153,7 @@ func _on_button_mouse_exited(button):
 	)
 	_tween.start()
 
-# Click: se hace grande y se encoge rápido
+
 func _on_button_pressed_anim(button):
 	_tween.interpolate_property(
 		button, "rect_scale",
@@ -182,7 +175,6 @@ func _on_button_pressed_anim(button):
 	_tween.start()
 
 
-
-
 func _on_Stats_pressed():
+	$button.play()
 	LoadingScreen.goto_scene("res://scenes/ui/StatsMenu.tscn")

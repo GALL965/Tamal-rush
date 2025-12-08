@@ -5,7 +5,7 @@ export var chase_speed  := 90.0
 export var detect_range := 160.0
 onready var vis := $Vis
 
-var _enemy_id := 0   # ID único para BD
+var _enemy_id := 0   # id unico
 
 export (NodePath) var animated_sprite_path = NodePath("AnimatedSprite")
 
@@ -16,7 +16,7 @@ var target_dir := Vector2.ZERO
 var player: Node = null
 var chasing := false
 var facing := 1
-var _last_chasing_state := false  # Para detectar cambios y loguear
+var _last_chasing_state := false  # Pa detectar cambios y loguear
 
 onready var anim: AnimatedSprite = null
 onready var wander := $Wander
@@ -37,8 +37,7 @@ func _ready():
 		wander.start(rand_range(0.8, 1.6))
 
 	# ----------------------------------------------------
-	# REGISTRO DEL ENEMIGO EN GAME PARA BD
-	# ----------------------------------------------------
+	# aqui se registra enemigo para bd
 	_enemy_id = Game.enemies.size() + 1
 	Game.register_enemy_spawn(
 		_enemy_id,
@@ -100,11 +99,16 @@ func _physics_process(delta):
 			vel = target_dir * patrol_speed
 
 	vel = move_and_slide(vel)
+	
+	for i in range(get_slide_count()):
+		var col := get_slide_collision(i)
+		if col.collider and col.collider.is_in_group("player"):
+			col.collider._die()
+
+	
+
 	_update_anim()
 
-	# ----------------------------------------------------
-	# LOGS PARA BD: detectar cambios en persecución
-	# ----------------------------------------------------
 	if chasing != _last_chasing_state:
 		Game.set_enemy_chasing(_enemy_id, chasing)
 		if chasing:
@@ -112,7 +116,6 @@ func _physics_process(delta):
 		else:
 			Game.log_enemy_event(_enemy_id, "lost")
 	_last_chasing_state = chasing
-	# ----------------------------------------------------
 
 
 func _on_Wander_timeout():
@@ -178,3 +181,11 @@ func _update_anim():
 
 	if anim.animation != want:
 		anim.play(want)
+
+
+
+func _check_player_collision():
+	for i in range(get_slide_count()):
+		var col := get_slide_collision(i)
+		if col.collider and col.collider.is_in_group("player"):
+			col.collider._die()

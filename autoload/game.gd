@@ -1,32 +1,25 @@
 extends Node
-# ============================================
-#  Autoload de Tamal Rush
-#  - Mantiene el guardado original (savegame.json)
-#  - Además guarda estadísticas para BD (tamal_rush_stats.json)
-# ============================================
+# este codigo es autoload pa que se lea al inicio
 
 var carried := {}   # lo que traes en la mano en esta run
-var banked  := {}   # lo guardado definitivamente (entre runs)
+var banked  := {}   # lo guardado definitivamente entre runs
 
 var base_enemy_speed := 60.0
-var base_spawn_rate := 0.012    # si ya la definiste antes, deja solo una
+var base_spawn_rate := 0.012    
+var run_started := false
 
 
+var time_accumulator := 0.0  # tiempo total jugado en segundos
 
-# --------- CONSTANTES DE GUARDADO ----------
-const SAVE_PATH_GAME  := "user://savegame.json"          # guardado viejo (tamales bancados)
-const SAVE_PATH_STATS := "user://tamal_rush_stats.json"  # NUEVO: historial de runs para BD
-# --------- CONFIG DE SPAWNS ----------
+const SAVE_PATH_GAME  := "user://savegame.json"         
+const SAVE_PATH_STATS := "user://tamal_rush_stats.json" 
 
-
-
-# --------- RANDOM / RUN ----------
 var rng := RandomNumberGenerator.new()
 var run_seed := 0
 var camp_safe_radius := 300.0
 var run_start_camp_pos := Vector2()
 
-# Catálogo de tamales (para el sistema viejo)
+
 const TAMALES := [
 	{"name":"Frijol",   "weight":35},
 	{"name":"Ranchero", "weight":25},
@@ -35,7 +28,7 @@ const TAMALES := [
 	{"name":"Piña",     "weight":15},
 ]
 
-# --------- ESTADO GENERAL DE LA PARTIDA (STATS) ----------
+# statts generales 
 const STATE_IDLE    := 0
 const STATE_RUNNING := 1
 const STATE_ENDED   := 2
@@ -77,9 +70,16 @@ var enemies_encountered := 0
 
 
 func _ready() -> void:
+	print("Game autoload is active. State=", game_state)
+
 	rng.randomize()
-	load_game()     # carga savegame.json (banked + seed)
-	reset_stats()   # limpia stats de la run actual
+	load_game()
+	reset_stats()
+	set_process(true)  # NUEVO: para que _process corra siempre
+
+func _process(delta: float) -> void:
+	if game_state == STATE_RUNNING:
+		time_accumulator += delta
 
 
 # ==================================================
@@ -93,6 +93,7 @@ func reset_stats() -> void:
 	start_time_str = ""
 	end_time_str = ""
 	total_time_played = 0.0
+	time_accumulator = 0.0  # NUEVO
 
 	# Player
 	speed = 0.0
@@ -133,18 +134,27 @@ func reset_run(camp_pos: Vector2) -> void:
 
 
 func start_game_session() -> void:
+	print("start_game_session CALLED. State=", game_state)
+
 	game_state = STATE_RUNNING
 	_start_time_unix = OS.get_unix_time()
 	start_time_str = _get_iso_datetime()
+	time_accumulator = 0.0
+
 
 
 func end_game_session() -> void:
 	if game_state != STATE_RUNNING:
 		return
+
+	# Usamos el tiempo acumulado real del juego
+	total_time_played = time_accumulator
+
 	_end_time_unix = OS.get_unix_time()
 	end_time_str = _get_iso_datetime()
-	total_time_played = float(_end_time_unix - _start_time_unix)
 	game_state = STATE_ENDED
+
+
 
 
 # ==================================================
@@ -414,4 +424,15 @@ func send_stats_to_api() -> void:
 	var body := to_json(build_payload())
 
 	http.request(url, headers, false, HTTPClient.METHOD_POST, body)
+	
+
+		
+func _notification(what):
+	if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
+		if game_state == STATE_RUNNING:
+			end_game_session()
+			save_stats()
+			send_stats_to_api()
+			print("RUN finalizada al cerrar ventana, tiempo=", total_time_played)
+
 

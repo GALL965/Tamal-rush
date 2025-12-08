@@ -1,8 +1,12 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://assets/Sour_Gummy/SourGummy-Italic-VariableFont_wdth,wght.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://scenes/ui/StatsMenu.gd" type="Script" id=2]
 [ext_resource path="res://assets/Sprites/UI/tabla.png" type="Texture" id=3]
+[ext_resource path="res://assets/Sprites/UI/fond.png" type="Texture" id=4]
+[ext_resource path="res://assets/Sprites/Machape/idle.png" type="Texture" id=5]
+[ext_resource path="res://assets/Sprites/UI/boton.png" type="Texture" id=6]
+[ext_resource path="res://Tamale/assets/Sour_Gummy/static/SourGummy-Black.ttf" type="DynamicFontData" id=7]
 
 [sub_resource type="Theme" id=2]
 
@@ -12,8 +16,25 @@ region_rect = Rect2( 0, 0, 768, 768 )
 margin_top = 5.0
 
 [sub_resource type="DynamicFont" id=1]
-size = 26
+size = 70
 font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 50
+font_data = ExtResource( 7 )
+
+[sub_resource type="StyleBoxTexture" id=5]
+texture = ExtResource( 6 )
+region_rect = Rect2( 0, 0, 500, 250 )
+
+[sub_resource type="StyleBoxTexture" id=6]
+texture = ExtResource( 6 )
+region_rect = Rect2( 0, 0, 500, 250 )
+
+[sub_resource type="StyleBoxTexture" id=7]
+texture = ExtResource( 6 )
+region_rect = Rect2( 0, 0, 500, 250 )
+margin_left = 3.0
 
 [node name="StatsMenu" type="Control"]
 anchor_right = 1.0
@@ -24,39 +45,48 @@ margin_right = -258.0
 margin_bottom = -129.0
 script = ExtResource( 2 )
 
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_left = 12.0
+margin_top = 114.0
+margin_right = 2892.0
+margin_bottom = 2274.0
+rect_scale = Vector2( 0.529244, 0.529244 )
+texture = ExtResource( 4 )
+
 [node name="PanelBackground" type="Panel" parent="."]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -347.0
-margin_top = -205.0
-margin_right = 353.0
-margin_bottom = 295.0
+margin_left = -362.0
+margin_top = -172.0
+margin_right = 838.0
+margin_bottom = 628.0
 rect_min_size = Vector2( 800, 800 )
+rect_scale = Vector2( 0.743992, 0.743992 )
 theme = SubResource( 2 )
 custom_styles/panel = SubResource( 3 )
 
 [node name="Header" type="Label" parent="PanelBackground"]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -200.0
-margin_top = 10.0
-margin_right = 200.0
-margin_bottom = 50.0
+margin_left = -433.331
+margin_top = 53.764
+margin_right = 432.669
+margin_bottom = 144.764
 custom_fonts/font = SubResource( 1 )
 text = "Estadísticas del Mapache"
 align = 1
 
 [node name="StatsContainer" type="VBoxContainer" parent="PanelBackground"]
-margin_left = 20.0
-margin_top = 70.0
+margin_left = 60.0
+margin_top = 200.0
 margin_right = 660.0
 margin_bottom = 430.0
 custom_constants/separation = 12
 
 [node name="Name" type="HBoxContainer" parent="PanelBackground/StatsContainer"]
-margin_right = 766.0
+margin_right = 955.0
 margin_bottom = 91.0
 
 [node name="Value" type="Label" parent="PanelBackground/StatsContainer/Name"]
@@ -70,58 +100,26 @@ margin_right = 364.0
 margin_bottom = 91.0
 text = "--"
 
-[node name="DashPower" type="HBoxContainer" parent="PanelBackground/StatsContainer"]
+[node name="Collected" type="HBoxContainer" parent="PanelBackground/StatsContainer"]
 margin_top = 103.0
-margin_right = 766.0
+margin_right = 955.0
 margin_bottom = 194.0
 
-[node name="Value" type="Label" parent="PanelBackground/StatsContainer/DashPower"]
-margin_right = 422.0
-margin_bottom = 91.0
-text = "Dash Power: "
-
-[node name="Value2" type="Label" parent="PanelBackground/StatsContainer/DashPower"]
-margin_left = 426.0
-margin_right = 494.0
-margin_bottom = 91.0
-text = "--"
-
-[node name="Speed" type="HBoxContainer" parent="PanelBackground/StatsContainer"]
-margin_top = 206.0
-margin_right = 766.0
-margin_bottom = 297.0
-
-[node name="Value" type="Label" parent="PanelBackground/StatsContainer/Speed"]
-margin_right = 348.0
-margin_bottom = 91.0
-text = "Velocidad: "
-
-[node name="Value2" type="Label" parent="PanelBackground/StatsContainer/Speed"]
-margin_left = 352.0
-margin_right = 420.0
-margin_bottom = 91.0
-text = "--"
-
-[node name="Collected" type="HBoxContainer" parent="PanelBackground/StatsContainer"]
-margin_top = 309.0
-margin_right = 766.0
-margin_bottom = 400.0
-
 [node name="Value" type="Label" parent="PanelBackground/StatsContainer/Collected"]
-margin_right = 640.0
+margin_right = 883.0
 margin_bottom = 91.0
-text = "Tamales recogidos:"
+text = "Tamales recogidos en toal:"
 
 [node name="Value2" type="Label" parent="PanelBackground/StatsContainer/Collected"]
-margin_left = 644.0
-margin_right = 712.0
+margin_left = 887.0
+margin_right = 955.0
 margin_bottom = 91.0
 text = "--"
 
 [node name="Banked" type="HBoxContainer" parent="PanelBackground/StatsContainer"]
-margin_top = 412.0
-margin_right = 766.0
-margin_bottom = 503.0
+margin_top = 206.0
+margin_right = 955.0
+margin_bottom = 297.0
 
 [node name="Value" type="Label" parent="PanelBackground/StatsContainer/Banked"]
 margin_right = 694.0
@@ -135,9 +133,9 @@ margin_bottom = 91.0
 text = "--"
 
 [node name="TimePlayed" type="HBoxContainer" parent="PanelBackground/StatsContainer"]
-margin_top = 515.0
-margin_right = 766.0
-margin_bottom = 606.0
+margin_top = 309.0
+margin_right = 955.0
+margin_bottom = 400.0
 
 [node name="Value" type="Label" parent="PanelBackground/StatsContainer/TimePlayed"]
 margin_right = 499.0
@@ -155,10 +153,20 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = 551.0
-margin_top = 48.0
-margin_right = 787.0
-margin_bottom = 145.0
+margin_left = 691.681
+margin_top = -137.358
+margin_right = 927.681
+margin_bottom = -40.3583
+rect_scale = Vector2( 1.44274, 1.44274 )
+custom_fonts/font = SubResource( 4 )
+custom_styles/hover = SubResource( 5 )
+custom_styles/pressed = SubResource( 6 )
+custom_styles/normal = SubResource( 7 )
 text = "Cerrar"
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 1359, 467 )
+scale = Vector2( -0.337728, 0.363222 )
+texture = ExtResource( 5 )
 
 [connection signal="pressed" from="PanelBackground/CloseButton" to="." method="_on_CloseButton_pressed"]
